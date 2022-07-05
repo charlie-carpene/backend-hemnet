@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: %i[ show update destroy ]
+  before_action :set_movie, only: [:show, :update, :destroy]
 
   # GET /movies
   def index
@@ -15,9 +15,14 @@ class MoviesController < ApplicationController
 
   # POST /movies
   def create
-    @movie = Movie.new(movie_params)
+    @category = Category.where(name: movie_params[:category]).first
 
-    if @movie.save
+    @movie = Movie.new(movie_params.except(:category))
+    @movie.category = @category
+
+    if @movie.already_in_db
+      render json: @movie.errors, status: :not_modified
+    elsif @movie.save
       render json: @movie, status: :created, location: @movie
     else
       render json: @movie.errors, status: :unprocessable_entity
@@ -46,6 +51,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.fetch(:movie, {})
+      params.require(:movie).permit(:title, :year, :poster, :category)
     end
 end
