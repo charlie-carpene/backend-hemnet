@@ -1,7 +1,7 @@
 class Movie < ApplicationRecord
     validates :title, presence: true
     validates :year, presence: true, length: { is: 4 }, numericality: { only_integer: true }
-    validates :poster, format: { with: /^http/,  message: "the Poster should start with http" }, allow_blank: true
+    validates :poster, format: { with: /\A(http|https)/,  message: "the Poster should start with http" }, allow_blank: true
 
     belongs_to :category
 
