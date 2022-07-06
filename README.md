@@ -11,6 +11,6 @@
 
 * Clone the repository: `git clone https://github.com/charlie-carpene/backend-hemnet.git`
 * Go to the root of the repo and run `bundle install`
-* Then `rails db:migrate; db:create; db:seed` to initiate database
+* Then `rails db:create; rails db:migrate; rails db:seed` to initiate database
 * Start local server with `rails s` and go see the movie Categories created on the [localhost](http://localhost:3000/categories)
 * If you see 3 categories in JSON format it means the back-end is up and running and you can go on with the front end [here](https://github.com/charlie-carpene/frontend-hemnet).
